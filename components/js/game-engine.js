@@ -34,19 +34,19 @@ class GameEngine {
     this.points = this.points + 1;
   }
   async initialize_game(){
-    GameEngine.BallBombImage.src = "/assets/images/bomb_ball.png";
+    GameEngine.BallBombImage.src = "./assets/images/bomb_ball.png";
     GameEngine.BallBombImage.onload = ()=>{console.log("ball bomb image loaded.");};
-    GameEngine.BirdImage.src = "/assets/images/bird.png";
+    GameEngine.BirdImage.src = "./assets/images/bird.png";
     GameEngine.BirdImage.onload = ()=>{console.log("bird image loaded.");};
-    GameEngine.DynamiteImage.src = "/assets/images/dynamite.png";
+    GameEngine.DynamiteImage.src = "./assets/images/dynamite.png";
     GameEngine.DynamiteImage.onload = ()=>{console.log("dynamite bomb image loaded.");};
-    GameEngine.ParrotsImage.src = "/assets/images/parrots.png";
+    GameEngine.ParrotsImage.src = "./assets/images/parrots.png";
     GameEngine.ParrotsImage.onload = ()=>{console.log("parrots image loaded.");};
-    GameEngine.CowImage.src = "/assets/images/cow.png";
+    GameEngine.CowImage.src = "./assets/images/cow.png";
     GameEngine.CowImage.onload = ()=>{console.log("cow image loaded.");};
-    GameEngine.AtomicBombImage.src = "/assets/images/atomic-bomb.png";
+    GameEngine.AtomicBombImage.src = "./assets/images/atomic-bomb.png";
     GameEngine.AtomicBombImage.onload = ()=>{console.log("atomic bomb image loaded.");};
-    GameEngine.WindImage.src = "/assets/images/wind.png";
+    GameEngine.WindImage.src = "./assets/images/wind.png";
     GameEngine.WindImage.onload = ()=>{console.log("wind image loaded.");};
     this.balls = [];
     this.leafs = [];
@@ -67,16 +67,16 @@ class GameEngine {
     this.isWeb = true;
     // this.audioPlayer = null;
     this.sounds = {
-      "same-color-merge-audio": {sound_path:"/assets/audio/same-color-merge.wav", start_time:0},
-      "ball-hits-ball-audio": {sound_path:"/assets/audio/ball-hits-ball.wav", start_time:0.4},
-      "ball-hit-boundries"       : {sound_path: "/assets/audio/ball-hit-boundries.wav", start_time:0},
-      "ball-bomb"       : {sound_path: "/assets/audio/ball-bomb.wav", start_time:0},
-      "bird"            : {sound_path: "/assets/audio/bird.wav", start_time:0},
-      "dynamite"       : {sound_path: "/assets/audio/dynamite.wav", start_time:0},
-      "parrots"       : {sound_path: "/assets/audio/parrots.wav", start_time:0},
-      "cow"       : {sound_path: "/assets/audio/cow.wav", start_time:0.7},
-      "atomic-bomb"       : {sound_path: "/assets/audio/atomic-bomb.wav", start_time:1.3},
-      "ball-pop": {sound_path: "/assets/audio/ball-pop.wav", start_time:0},
+      "same-color-merge-audio": {sound_path:"./assets/audio/same-color-merge.wav", start_time:0},
+      "ball-hits-ball-audio": {sound_path:"./assets/audio/ball-hits-ball.wav", start_time:0.4},
+      "ball-hit-boundries"       : {sound_path: "./assets/audio/ball-hit-boundries.wav", start_time:0},
+      "ball-bomb"       : {sound_path: "./assets/audio/ball-bomb.wav", start_time:0},
+      "bird"            : {sound_path: "./assets/audio/bird.wav", start_time:0},
+      "dynamite"       : {sound_path: "./assets/audio/dynamite.wav", start_time:0},
+      "parrots"       : {sound_path: "./assets/audio/parrots.wav", start_time:0},
+      "cow"       : {sound_path: "./assets/audio/cow.wav", start_time:0.7},
+      "atomic-bomb"       : {sound_path: "./assets/audio/atomic-bomb.wav", start_time:1.3},
+      "ball-pop": {sound_path: "./assets/audio/ball-pop.wav", start_time:0},
     };
 
     this.audioPlayers = {};
