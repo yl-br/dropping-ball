@@ -1,0 +1,9 @@
+h1#headline {
+	text-align: center;
+	font-size: 4em;
+	color: darkred;
+	font-family: "Great Vibes", cursive;
+	font-weight: normal;
+	text-shadow: 0 1px 1px #fff;
+	margin-bottom: 0.5em;
+}

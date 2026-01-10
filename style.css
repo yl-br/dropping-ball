@@ -1,0 +1,65 @@
+html, body {
+    height: 100%;
+    width:100%;
+    margin: 0;
+
+    -webkit-font-smoothing: antialiased;
+
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    text-align: center;
+    justify-content: center;
+}
+
+#overlay {
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    width: 500px;
+    background: aliceblue;
+    opacity: 0.8;
+    text-align: center;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+
+/* Full-screen cover across desktop and all mobile devices */
+#introImage,
+#mainVideo {
+    position: fixed;
+    /* Use 'inset: 0' as a shorthand for top:0; right:0; bottom:0; left:0 */
+    inset: 0;
+
+    width: 100vw;
+
+    /* 1. Default fallback and standard desktop height */
+    height: 100vh;
+
+    /* 2. MODERN FIX FOR MOBILE BROWSERS (handles dynamic address bars) */
+    /* 100dvh: Dynamic Viewport Height (adapts when address bar hides/shows) */
+    height: 100dvh;
+
+    /* 3. iOS SPECIFIC FIX: Required for consistent behavior on older and complex iOS versions */
+    /* Uses a non-standard property for height on iOS */
+    /* Needs to be wrapped in a specific query to work reliably: */
+    @supports (-webkit-touch-callout: none) {
+        height: -webkit-fill-available;
+    }
+
+    object-fit: cover;
+    object-position: center center;
+}
+
+/* Ensure the video element remains hidden initially */
+#mainVideo {
+    display: none;
+}
+

@@ -1,0 +1,12 @@
+.collage {
+  display: flex;
+  flex-direction: column; /* vertical layout */
+  gap: 10px; /* optional spacing between images */
+  align-items: center;
+}
+
+.collage-img {
+  width: 5em;
+  height: 5em;
+  object-fit: cover; /* keeps aspect ratio and fills box */
+}

@@ -1,0 +1,40 @@
+#gameover-blocker {
+	position: fixed;
+	top: 65%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 350px;
+	max-height: 300px;
+	text-align: center;
+	background-color: #000000;
+	opacity: 0.8;
+	z-index: 100;
+}
+
+#gameover-blocker .blocker-headline {
+	font-size: 3em;
+	color: #ffffff;
+}
+
+#gameover-blocker .score_text {
+	font-size: 1.5em;
+	color: #ffffff;
+	font-weight: 25;
+	margin: 0 1em;
+	padding: 0.1em 0.4em;
+	border-radius: 0.8em 0.3em;
+	background: transparent;
+	background-image: linear-gradient(
+		to right,
+		rgba(255, 225, 0, 0.1),
+		rgba(255, 225, 0, 0.7) 4%,
+		rgba(255, 225, 0, 0.3)
+	);
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+#gameover-blocker .score_position {
+	font-size: 1em;
+	color: #ffffff;
+}
