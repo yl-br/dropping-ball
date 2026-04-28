@@ -97,14 +97,6 @@ class GameEngine {
   }
 
   initialize_board_balls() {
-    const BALL_COLORS = [
-      ["#e74c3c"],   // red
-      ["#3498db"],   // blue
-      ["#2ecc71"],   // green
-      ["#f39c12"],   // orange
-      ["#9b59b6"],   // purple
-    ];
-
     const radius = 20;
     const padding = 4;
     const step = (radius * 2) + padding;
@@ -114,8 +106,6 @@ class GameEngine {
     const areaBottom = this.canvas.height;
     const areaLeft = radius + padding;
     const areaRight = this.canvas.width - radius - padding;
-    const areaHeight = areaBottom - areaTop;
-
     // Build a grid of candidate positions
     const candidates = [];
     for (let y = areaTop + radius + padding; y + radius + padding <= areaBottom; y += step) {
@@ -135,7 +125,7 @@ class GameEngine {
     const selected = candidates.slice(0, fillCount);
 
     for (const pos of selected) {
-      const color = BALL_COLORS[Math.floor(Math.random() * BALL_COLORS.length)];
+      const color = getRandomColors(1);
       const ball = new Ball(pos.x, pos.y, radius, color, this.line_height, "ball", null);
       // Give them zero velocity so they sit still
       ball.vel = { x: 0, y: 0 };
