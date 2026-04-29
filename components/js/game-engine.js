@@ -92,6 +92,7 @@ class GameEngine {
     await this.initializeAudio();
     // this.initializeTilt();
 
+    await this.trigger_golden_butterfly_effect();
     this.initialize_board_balls();
 
   }
@@ -430,6 +431,10 @@ gameLoop(){
   if(!this.is_playing){
     return;
   }
+  if(this.is_butterfly_playing){
+    requestAnimationFrame(this.gameLoop.bind(this));
+    return;
+  }
     // Is game over ?
   if(this.is_game_over()){
     this.handle_game_over();
@@ -663,7 +668,7 @@ handle_collision_with_bird(ball_A, ball_B){
   bird_animation(this.ctx, this.balls);
   this.balls.forEach(ball=>ball.show_balls_explode_animation(this.ctx))
   this.balls = [];
-  this.trigger_golden_butterfly_effect();
+  this.trigger_golden_butterfly_effect().then(() => this.initialize_board_balls());
 
   if(Math.random() < 0.20)
   {
@@ -696,7 +701,7 @@ handle_collision_with_atomic_bomb(ball_A, ball_B){
   atomic_bomb_animation(this.ctx);
   this.balls.forEach(ball=>ball.show_balls_explode_animation(this.ctx))
   this.balls = [];
-  this.trigger_golden_butterfly_effect();
+  this.trigger_golden_butterfly_effect().then(() => this.initialize_board_balls());
 
   if(Math.random() < 0.20)
   {
@@ -723,7 +728,7 @@ handle_collidion_with_same_color(ball_A, ball_B){
     this.balls.splice(this.balls.findIndex(item => item === ball_A), 1);
 
     if (this.balls.length === 0) {
-      this.trigger_golden_butterfly_effect();
+      this.trigger_golden_butterfly_effect().then(() => this.initialize_board_balls());
     }
 
     if(Math.random() < 0.20)
@@ -771,7 +776,7 @@ handle_collision_with_dynamite(ball_A, ball_B, position_epsilon = 5){
   this.balls = this.balls.filter(item => !effected_balls.includes(item));
 
   if (this.balls.length === 0) {
-    this.trigger_golden_butterfly_effect();
+    this.trigger_golden_butterfly_effect().then(() => this.initialize_board_balls());
   }
 
   if(Math.random() < 0.20)
@@ -791,7 +796,7 @@ handle_collsion_with_bomb(ball_A, ball_B)
   this.balls.splice(this.balls.findIndex(item => item === ball_B), 1);
 
   if (this.balls.length === 0) {
-    this.trigger_golden_butterfly_effect();
+    this.trigger_golden_butterfly_effect().then(() => this.initialize_board_balls());
   }
 
   if(Math.random() < 0.20)
@@ -845,6 +850,10 @@ trigger_golden_butterfly_effect() {
   const ctx = this.ctx;
   const canvasWidth = this.canvas.width;
   const canvasHeight = this.canvas.height;
+
+  this.is_butterfly_playing = true;
+
+  return new Promise((resolve) => {
 
   // Build butterfly data
   const butterflies = Array.from({ length: NUM_BUTTERFLIES }, () => ({
@@ -965,8 +974,9 @@ trigger_golden_butterfly_effect() {
   const animate = () => {
     const elapsed = Date.now() - startTime;
     if (elapsed >= DURATION_MS) {
-      // Restore normal rendering — next gameLoop draw call will take over
       cancelAnimationFrame(frameId);
+      this.is_butterfly_playing = false;
+      resolve();
       return;
     }
 
@@ -1019,6 +1029,7 @@ trigger_golden_butterfly_effect() {
   };
 
   frameId = requestAnimationFrame(animate);
+  }); // end Promise
 }
 
 handle_game_over() {
