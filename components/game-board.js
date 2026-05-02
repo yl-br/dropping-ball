@@ -27,15 +27,17 @@ export const GameBoard = { // <--- Added 'export' here
       initializeCanvas() {
           this.canvas = document.getElementById('gameCanvas');
           this.ctx = this.canvas.getContext('2d');
-          this.gameEngine = new GameEngine(this.canvas, 250, this.onIncreaseScore, this.onGameOver);
+
+          // Calculate 25% of the canvas height (500 * 0.25 = 125)
+          const deadlineY = this.canvas.height * 0.25;
+
+          // Initialize the engine with the new 125px line height
+          this.gameEngine = new GameEngine(this.canvas, deadlineY, this.onIncreaseScore, this.onGameOver);
 
           this.gameEngine.initialize_game().then(() => {
-              // 1. Create the ball and assign it to the engine property
+              // Position the starting ball higher up to accommodate the new line
               this.gameEngine.mouse_ball = this.gameEngine.create_random_ball(this.canvas.width / 2, 10);
-
-              // 2. Keep a local reference if needed for your component logic
               this.mouse_ball = this.gameEngine.mouse_ball;
-
               this.addEventListeners();
               this.gameEngine.start_game();
           });
@@ -61,13 +63,21 @@ export const GameBoard = { // <--- Added 'export' here
         }
       });
     },
-    onIncreaseScore() {
-      this.gameEngine.increase_point();
-      this.$emit('on-increase-score');
-    },
-    onGameOver() {
-      this.$emit('on-game-over');
-    },
+      async restartGame() {
+          await this.gameEngine.initialize_game();
+          // Reset local references
+          this.gameEngine.mouse_ball = this.gameEngine.create_random_ball(this.canvas.width / 2, 10);
+          this.mouse_ball = this.gameEngine.mouse_ball;
+          this.gameEngine.is_playing = true; // Ensure the engine is ready to play
+          this.gameEngine.start_game();
+      },
+      onIncreaseScore() {
+          this.gameEngine.increase_point();
+          this.$emit('on-increase-score');
+      },
+      onGameOver() {
+          this.$emit('on-game-over');
+      },
     setUsername(input_username) {
       if (input_username !== '') {
         this.$emit('on-set-username', input_username);

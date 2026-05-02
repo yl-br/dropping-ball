@@ -144,46 +144,27 @@ export function is_game_over(engine, velocity_epsilon = 1.5) {
 
 }
 
-export function handle_game_over(engine, ) {
+export function handle_game_over(engine) {
+    // Stop all ball movement
+    for (const ball of engine.balls) {
+        ball.vel = { x: 0, y: 0 };
+    }
 
+    engine.is_playing = false;
+    engine.mouse_ball = null;
 
-  for (const ball of engine.balls) 
-  {
-    ball.vel = (0,0);
+    // Show explosion animations
+    engine.balls.forEach(ball => {
+        ball.show_balls_explode_animation(engine.ctx, true);
+    });
 
-  }
-  engine.is_playing = false
-  engine.mouse_ball = null;
+    // Notify the Vue component that the game is over
+    engine.on_game_over_callback();
 
-  engine.last_animation_timestamp = Date.now();
-  engine.balls.forEach(ball => {
-    ball.show_balls_explode_animation(engine.ctx, true);
-  });
-  
-  
-
-    // window.setTimeout(()=>{engine.is_playing = false;}, 3000)
-  
-  
-  engine.on_game_over_callback();
-
-  
-  
-  window.setTimeout(()=>{engine.draw(null);}, 3000)
-  
-  
-
-  window.setTimeout(()=>{
-    document.addEventListener('click', reload_page);
-    document.addEventListener('keydown',  reload_page);}, 2000)
-
-
-  function reload_page(){
-   document.removeEventListener('click', reload_page);
-   document.removeEventListener('keydown', reload_page);
-   window.location.reload();
-
- }
+    // Clear the board after a short delay for the explosion effects
+    window.setTimeout(() => {
+        engine.draw(null);
+    }, 3000);
 
 
 }
