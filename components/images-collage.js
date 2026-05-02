@@ -1,7 +1,7 @@
 // ImagesCollage.js
 
 
-const ImagesCollage = {
+export const ImagesCollage = {
   data() {
     return {
       images: [

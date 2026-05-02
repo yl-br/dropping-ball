@@ -1,11 +1,13 @@
-// game-board.js
+// components/game-board.js
 
-const GameBoard = {
-  template: `
-    <div id="canvas-wrap">
-      <canvas id="gameCanvas" width="350" height="500"></canvas>
-    </div>
-  `,
+import { GameEngine } from './js/game-engine.js'; // Ensure this import is also present
+
+export const GameBoard = { // <--- Added 'export' here
+    template: `
+      <div id="canvas-wrap">
+        <canvas id="gameCanvas" width="350" height="500"></canvas>
+      </div>
+    `,
   props: ['score'],
   data() {
     return {
@@ -22,16 +24,22 @@ const GameBoard = {
     this.initializeCanvas();
   },
   methods: {
-    initializeCanvas() {
-      this.canvas = document.getElementById('gameCanvas');
-      this.ctx = this.canvas.getContext('2d');
-      this.gameEngine = new GameEngine(this.canvas,250, this.onIncreaseScore, this.onGameOver);
-      this.gameEngine.initialize_game().then(() => {
-        this.mouse_ball = this.gameEngine.create_random_ball(this.canvas.width / 2, 10);
-        this.addEventListeners();
-        this.gameEngine.start_game();
-      });
-    },
+      initializeCanvas() {
+          this.canvas = document.getElementById('gameCanvas');
+          this.ctx = this.canvas.getContext('2d');
+          this.gameEngine = new GameEngine(this.canvas, 250, this.onIncreaseScore, this.onGameOver);
+
+          this.gameEngine.initialize_game().then(() => {
+              // 1. Create the ball and assign it to the engine property
+              this.gameEngine.mouse_ball = this.gameEngine.create_random_ball(this.canvas.width / 2, 10);
+
+              // 2. Keep a local reference if needed for your component logic
+              this.mouse_ball = this.gameEngine.mouse_ball;
+
+              this.addEventListeners();
+              this.gameEngine.start_game();
+          });
+      },
     addEventListeners() {
       this.canvas.addEventListener("mousemove", (event) => {
         if (this.mouse_ball) {

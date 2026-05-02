@@ -1,6 +1,6 @@
 // username-blocker.js
 
-const UsernameBlocker = {
+export const UsernameBlocker = {
   template: `
     <div id="username-blocker" ref="blocker_container">
       <div v-if="!is_username_received" @keyup.enter="set_username(input_username)">

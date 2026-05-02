@@ -1,6 +1,6 @@
 // scores-list.js
 
-const ScoresList = {
+export const ScoresList = {
   template: `
     <ul id="scores-list" style="width: 220px; list-style-type: none;">
       <li v-for="(curr_score, index) in scores_display.top" :key="'top-' + index">

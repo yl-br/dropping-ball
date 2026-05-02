@@ -1,9 +1,17 @@
-// game-manager.js
+// components/game-manager.js
 
-const GameManager = {
+// 1. Add missing imports at the top
+import { GameBoard } from './game-board.js';
+import { UsernameBlocker } from './username-blocker.js';
+import { ScoresList } from './scores-list.js';
+import { GameoverBlocker } from './gameover-blocker.js';
+import { ImagesCollage } from './images-collage.js';
+
+
+export const GameManager = {
   name: 'GameManager',
   components: {
-    UsernameBlocker,
+     UsernameBlocker,
     ScoresList,
     GameBoard,
     GameoverBlocker,

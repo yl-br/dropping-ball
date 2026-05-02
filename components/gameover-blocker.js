@@ -1,6 +1,6 @@
 // gameover-blocker.js
 
-const GameoverBlocker = {
+export const GameoverBlocker = {
   name: 'GameoverBlocker',
   template: `
     <div id="gameover-blocker" ref="blocker_container" tabindex="-1">
