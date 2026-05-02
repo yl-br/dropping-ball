@@ -2,7 +2,7 @@
 
 function getRandomColor() {
                 // List of available colors
-  const colors = ["yellow", "red", "blue", "green",  "orange", "purple", "brown",  "pink" , "Cyan", "SpringGreen"];
+  const colors = ["yellow", "red", "blue", "green", "orange", "purple", "brown", "pink", "Cyan"];
   const options_number = colors.length
 
                 // Check if options_number is a valid index
