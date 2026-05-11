@@ -129,7 +129,7 @@ export function is_game_over(engine, velocity_epsilon = 1.5) {
 
   for (const ball of engine.balls) 
   {
-    const is_ball_above_line = !ball.is_ball_below_line;
+    const is_ball_above_line = !ball.is_ball_below_line();
     const is_ball_static = Math.abs(ball.vel.x) < velocity_epsilon && Math.abs(ball.vel.y) < velocity_epsilon;
 
     if(ball.is_line_intersect() && ball.is_crossed_line && is_ball_static){

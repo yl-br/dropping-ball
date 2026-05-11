@@ -104,7 +104,7 @@ export function handle_balls_collision(engine, velocity_epsilon = 2) {
 
       }
 
-      else if(is_collision && (ball_A.ball_type == "נbird" || ball_B.ball_type == "bird"))
+      else if(is_collision && (ball_A.ball_type == "bird" || ball_B.ball_type == "bird"))
       {
         engine.play_sound('bird');
         engine.handle_collision_with_bird(ball_A, ball_B);
@@ -208,6 +208,14 @@ export function handle_collidion_with_same_color(engine, ball_A, ball_B) {
   const newRadius = Math.sqrt(ball_A.radius ** 2 + ball_B.radius ** 2);
   ball_A.radius = newRadius;
   ball_A.colors = [getFirstIntersection(ball_A.colors, ball_B.colors)]
+
+  // After growing, the merged ball can extend ABOVE the deadline line.
+  // Initial balls have is_crossed_line=true and ~zero velocity, so an
+  // intersection would falsely trigger is_game_over the next frame and
+  // wipe the board. Keep the ball fully below the line.
+  if (ball_A.y - ball_A.radius < engine.line_height) {
+    ball_A.y = engine.line_height + ball_A.radius + 1;
+  }
 
   engine.balls.splice(engine.balls.findIndex(item => item === ball_B), 1);
   out_merging_balls.push(ball_A);
