@@ -64,6 +64,17 @@ export const GameBoard = { // <--- Added 'export' here
       });
     },
       async restartGame() {
+          // --- Stop any in-flight game loop cleanly BEFORE starting fresh ---
+          // If the user hits Restart mid-game, the previous gameLoop has a pending
+          // requestAnimationFrame queued. Flipping is_playing to false makes the
+          // next iteration return without re-scheduling itself. We then await one
+          // animation frame so that pending iteration runs (and exits) before we
+          // launch a new loop — otherwise we'd end up with two loops racing.
+          if (this.gameEngine) {
+              this.gameEngine.is_playing = false;
+              await new Promise(resolve => requestAnimationFrame(resolve));
+          }
+
           await this.gameEngine.initialize_game();
           // Reset local references
           this.gameEngine.mouse_ball = this.gameEngine.create_random_ball(this.canvas.width / 2, 10);
@@ -86,4 +97,3 @@ export const GameBoard = { // <--- Added 'export' here
     },
   }
 };
-

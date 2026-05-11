@@ -1,0 +1,99 @@
+/* =================================================================
+   Restart Game Button
+   40px-tall blue "fusion" pill, fixed top-right of the viewport.
+   - Layered shadows = outer glow halo + inner glass highlight
+   - Hover: lifts, brighter glow, icon spins a full 360°
+   - Active: presses back in, glow softens
+   - Keyboard focus: clear blue focus ring
+   ================================================================= */
+.restart-game-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 48px;          /* rectangle, slightly wider than tall */
+    height: 40px;         /* the 40px the user requested */
+    z-index: 9000;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+
+    color: #ffffff;
+    background:
+        linear-gradient(135deg,
+            #4FC3F7 0%,
+            #2196F3 35%,
+            #1565C0 70%,
+            #0D47A1 100%);
+
+    /* Fusion stack:
+         outer halo glow (cyan-blue),
+         deep drop shadow for lift,
+         inner top highlight (glass edge),
+         inner 1px ring for crispness                              */
+    box-shadow:
+        0 0 18px   rgba(33, 150, 243, 0.55),
+        0 6px 16px rgba(13,  71, 161, 0.45),
+        inset 0  1px 0 rgba(255, 255, 255, 0.40),
+        inset 0  0 0 1px rgba(255, 255, 255, 0.12);
+
+    transition:
+        transform  0.18s ease-out,
+        box-shadow 0.25s ease-out,
+        background 0.25s ease-out;
+
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.restart-game-btn .restart-icon {
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.30));
+}
+
+/* Hover: lift, brighten, spin the icon a full turn */
+.restart-game-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    background:
+        linear-gradient(135deg,
+            #64B5F6 0%,
+            #42A5F5 35%,
+            #1976D2 70%,
+            #0D47A1 100%);
+    box-shadow:
+        0 0 26px   rgba(33, 150, 243, 0.75),
+        0 10px 22px rgba(13,  71, 161, 0.55),
+        inset 0  1px 0 rgba(255, 255, 255, 0.50),
+        inset 0  0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.restart-game-btn:hover .restart-icon {
+    transform: rotate(-360deg);
+}
+
+/* Active: press in */
+.restart-game-btn:active {
+    transform: translateY(0) scale(0.97);
+    box-shadow:
+        0 0 10px   rgba(33, 150, 243, 0.40),
+        0 2px 6px  rgba(13,  71, 161, 0.40),
+        inset 0  1px 0 rgba(255, 255, 255, 0.25),
+        inset 0  0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Keyboard focus ring */
+.restart-game-btn:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 3px   rgba(100, 181, 246, 0.55),
+        0 0 18px   rgba(33, 150, 243, 0.55),
+        0 6px 16px rgba(13,  71, 161, 0.45),
+        inset 0  1px 0 rgba(255, 255, 255, 0.40),
+        inset 0  0 0 1px rgba(255, 255, 255, 0.12);
+}
