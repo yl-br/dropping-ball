@@ -1,11 +1,19 @@
 // components/game-board.js
 
-import { GameEngine } from './js/game-engine.js'; // Ensure this import is also present
+import { GameEngine } from './js/game-engine.js';
 
-export const GameBoard = { // <--- Added 'export' here
+export const GameBoard = {
     template: `
-      <div id="canvas-wrap">
+      <div class="game-board-container">
+
         <canvas id="gameCanvas" width="350" height="500"></canvas>
+
+        <aside class="game-sidebar">
+          <button class="restart-game-btn" @click="restartGame" title="Restart game">
+            <span class="restart-icon">⟳</span>
+          </button>
+        </aside>
+
       </div>
     `,
   props: ['score'],
@@ -28,14 +36,11 @@ export const GameBoard = { // <--- Added 'export' here
           this.canvas = document.getElementById('gameCanvas');
           this.ctx = this.canvas.getContext('2d');
 
-          // Calculate 25% of the canvas height (500 * 0.25 = 125)
           const deadlineY = this.canvas.height * 0.25;
 
-          // Initialize the engine with the new 125px line height
           this.gameEngine = new GameEngine(this.canvas, deadlineY, this.onIncreaseScore, this.onGameOver);
 
           this.gameEngine.initialize_game().then(() => {
-              // Position the starting ball higher up to accommodate the new line
               this.gameEngine.mouse_ball = this.gameEngine.create_random_ball(this.canvas.width / 2, 10);
               this.mouse_ball = this.gameEngine.mouse_ball;
               this.addEventListeners();
@@ -64,22 +69,15 @@ export const GameBoard = { // <--- Added 'export' here
       });
     },
       async restartGame() {
-          // --- Stop any in-flight game loop cleanly BEFORE starting fresh ---
-          // If the user hits Restart mid-game, the previous gameLoop has a pending
-          // requestAnimationFrame queued. Flipping is_playing to false makes the
-          // next iteration return without re-scheduling itself. We then await one
-          // animation frame so that pending iteration runs (and exits) before we
-          // launch a new loop — otherwise we'd end up with two loops racing.
           if (this.gameEngine) {
               this.gameEngine.is_playing = false;
               await new Promise(resolve => requestAnimationFrame(resolve));
           }
 
           await this.gameEngine.initialize_game();
-          // Reset local references
           this.gameEngine.mouse_ball = this.gameEngine.create_random_ball(this.canvas.width / 2, 10);
           this.mouse_ball = this.gameEngine.mouse_ball;
-          this.gameEngine.is_playing = true; // Ensure the engine is ready to play
+          this.gameEngine.is_playing = true;
           this.gameEngine.start_game();
       },
       onIncreaseScore() {

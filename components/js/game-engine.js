@@ -97,26 +97,26 @@ export class GameEngine {
         this.last_drawing_timestamp = -1;
 
         // Image Setup
-        GameEngine.BallBombImage.src = "/assets/images/bomb_ball.png";
-        GameEngine.BirdImage.src = "/assets/images/bird.png";
-        GameEngine.DynamiteImage.src = "/assets/images/dynamite.png";
-        GameEngine.ParrotsImage.src = "/assets/images/parrots.png";
-        GameEngine.CowImage.src = "/assets/images/cow.png";
-        GameEngine.AtomicBombImage.src = "/assets/images/atomic-bomb.png";
-        GameEngine.WindImage.src = "/assets/images/wind.png";
+        GameEngine.BallBombImage.src = "assets/images/bomb_ball.png";
+        GameEngine.BirdImage.src = "assets/images/bird.png";
+        GameEngine.DynamiteImage.src = "assets/images/dynamite.png";
+        GameEngine.ParrotsImage.src = "assets/images/parrots.png";
+        GameEngine.CowImage.src = "assets/images/cow.png";
+        GameEngine.AtomicBombImage.src = "assets/images/atomic-bomb.png";
+        GameEngine.WindImage.src = "assets/images/wind.png";
 
         // Sound files mapped to your actual .wav filenames
         const soundFiles = {
-            'ball-hit-boundries': '/assets/audio/ball-hit-boundries.wav',
-            'ball-bomb': '/assets/audio/ball-bomb.wav',
-            'bird': '/assets/audio/bird.wav',
-            'cow': '/assets/audio/cow.wav',
-            'parrots': '/assets/audio/parrots.wav',
-            'dynamite': '/assets/audio/dynamite.wav',
-            'atomic-bomb': '/assets/audio/atomic-bomb.wav',
-            'same-color-merge-audio': '/assets/audio/same-color-merge.wav',
-            'ball-hits-ball-audio': '/assets/audio/ball-hits-ball.wav',
-            'ball-pop': '/assets/audio/ball-pop.wav'
+            'ball-hit-boundries': 'assets/audio/ball-hit-boundries.wav',
+            'ball-bomb': 'assets/audio/ball-bomb.wav',
+            'bird': 'assets/audio/bird.wav',
+            'cow': 'assets/audio/cow.wav',
+            'parrots': 'assets/audio/parrots.wav',
+            'dynamite': 'assets/audio/dynamite.wav',
+            'atomic-bomb': 'assets/audio/atomic-bomb.wav',
+            'same-color-merge-audio': 'assets/audio/same-color-merge.wav',
+            'ball-hits-ball-audio': 'assets/audio/ball-hits-ball.wav',
+            'ball-pop': 'assets/audio/ball-pop.wav'
         };
 
         this.audioPlayers = {};

@@ -78,7 +78,7 @@ function getRandomNumber() {
     // Create a new image object
       var image = new Image();
     // Set the source of the image
-      image.src = "/assets/images/atomic-cloud.png";
+      image.src = "assets/images/atomic-cloud.png";
 
     // Wait for the image to load
       image.onload = function() {
@@ -133,7 +133,7 @@ function getRandomNumber() {
 
     function bird_animation(ctx, balls, duration = 600) {
       const birdImage = new Image();
-      birdImage.src = "/assets/images/bird.png";
+      birdImage.src = "assets/images/bird.png";
 
       birdImage.onload = function () {
         console.log("bird image loaded.");
@@ -223,7 +223,7 @@ function getRandomNumber() {
 
 function parrots_animation(ctx, ball, duration = 200) {
   const image = new Image();
-  image.src = "/assets/images/parrots.png";
+  image.src = "assets/images/parrots.png";
 
   image.onload = function () {
     const startTime = Date.now();

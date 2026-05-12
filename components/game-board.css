@@ -1,11 +1,27 @@
+/* =================================================================
+   Game Board Layout
+   - .game-board-container is a flex row: canvas on the left,
+     sidebar (with restart button + future controls) on the right.
+   - align-items: flex-start aligns the sidebar to the top of the
+     canvas, so the restart button sits at the canvas's top edge.
+   - width: fit-content makes the container hug its contents so
+     `margin: ... auto` actually centers it on the page.
+   ================================================================= */
 canvas {
-	display: block;
-	border: 5px solid #000;
-	margin: 50px auto 0;
+    display: block;
+    border: 5px solid #000;
 }
 
-#canvas-wrap {
-	position: relative;
-	width: 750px;
-	height: 450px;
+.game-board-container {
+    display: flex;
+    align-items: flex-start;     /* top-align canvas and sidebar */
+    gap: 8px;                    /* space between canvas and sidebar */
+    width: fit-content;
+    margin: 50px auto 0;         /* center the whole board on the page */
+}
+
+.game-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;                    /* vertical gap between future controls */
 }

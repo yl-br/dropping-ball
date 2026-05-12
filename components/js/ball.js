@@ -252,6 +252,34 @@ Ball.prototype.show_balls_explode_animation = function(ctx, is_leave_marks = fal
 
 
 Ball.prototype.paint_bomb = function(ctx, centerX, centerY, radius, bomb_image) {
+    // Guard against broken/unloaded images. If the PNG 404'd or hasn't
+    // finished loading, drawImage throws InvalidStateError and kills the
+    // game loop. Fall back to a dark circle with a "?" so the ball is
+    // still visible and the game keeps running.
+    const is_image_ready = bomb_image
+        && bomb_image.complete
+        && bomb_image.naturalHeight !== 0
+        && bomb_image.naturalWidth !== 0;
+
+    if (!is_image_ready) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = '#333';
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#000';
+        ctx.stroke();
+        ctx.fillStyle = '#fff';
+        ctx.font = `bold ${Math.floor(radius)}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('?', centerX, centerY);
+        ctx.restore();
+        return;
+    }
+
     ctx.save();
 
     // Begin drawing the circular clipping path
