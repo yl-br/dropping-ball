@@ -179,12 +179,25 @@ export const GameManager = {
             game_over_timeout_id = setTimeout(async () => {
                 game_over_timeout_id = null;
                 is_game_over.value = false;
-                score.points = 0;
+                start_new_round();
 
                 if (gameBoardRef.value) {
                     await gameBoardRef.value.restartGame();
                 }
             }, 5000);
+        }
+
+        // Reset everything that ties the score to the just-finished game,
+        // so the next round registers as a brand new entry (new local-storage
+        // key / new server record) instead of overwriting the previous one.
+        // Without this, score.id survives restarts and every subsequent game
+        // just overwrites the same saved score, so past rounds vanish.
+        function start_new_round() {
+            score.points = 0;
+            score.position = null;
+            score.id = null;
+            score.token = null;
+            score.next_increase_token = null;
         }
 
         // Manual restart triggered by the blue button.
@@ -195,8 +208,7 @@ export const GameManager = {
                 game_over_timeout_id = null;
             }
             is_game_over.value = false;
-            score.points = 0;
-            score.position = null;
+            start_new_round();
 
             if (gameBoardRef.value) {
                 await gameBoardRef.value.restartGame();
