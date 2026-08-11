@@ -5,6 +5,8 @@ import { ScoresList } from './scores-list.js';
 import { GameoverBlocker } from './gameover-blocker.js';
 import { ImagesCollage } from './images-collage.js';
 
+const SCORE_KEY_PREFIX = 'score:';
+
 export const GameManager = {
     name: 'GameManager',
     components: {
@@ -91,13 +93,21 @@ export const GameManager = {
         }
 
         function load_scores_from_local_storage() {
-            const scores_from_local_storage = Object.keys(localStorage).map(k => JSON.parse(localStorage.getItem(k)));
-            const scores_from_local_storage_with_position = scores_from_local_storage
+            const scores_from_local_storage = Object.keys(localStorage)
+                .filter(k => k.startsWith(SCORE_KEY_PREFIX))
+                .map(k => {
+                    try {
+                        return JSON.parse(localStorage.getItem(k));
+                    } catch {
+                        return null;
+                    }
+                })
+                .filter(Boolean);
+
+            return scores_from_local_storage
                 .slice()
                 .sort((a, b) => b.points - a.points)
                 .map((item, i) => ({ ...item, position: i + 1 }));
-
-            return scores_from_local_storage_with_position;
         }
 
         async function register_user(username) {
@@ -123,7 +133,7 @@ export const GameManager = {
         }
 
         function save_score_to_local_storage(score_id, username, points) {
-            localStorage.setItem(score_id, JSON.stringify({
+            localStorage.setItem(SCORE_KEY_PREFIX + score_id, JSON.stringify({
                 id: score_id,
                 username: username,
                 points: points,
@@ -192,6 +202,10 @@ export const GameManager = {
                 await gameBoardRef.value.restartGame();
             }
         }
+
+        // Load scores immediately on mount, so the list (local or remote)
+        // is populated before the first game-over, not just after it.
+        load_all_scores();
 
         return {
             score,
