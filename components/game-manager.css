@@ -1,9 +1,69 @@
-h1#headline {
-	text-align: center;
-	font-size: 4em;
-	color: darkred;
-	font-family: "Great Vibes", cursive;
-	font-weight: normal;
-	text-shadow: 0 1px 1px #fff;
-	margin-bottom: 0.5em;
+/* components/game-manager.css
+   Responsive layout for the Ball Dropping Game.
+   PC (>=1000px): [ Leaderboard | Board | Collage ]
+   Tablet (700-999px): collage strip on top, [ Leaderboard | Board ] below
+   Phone (<700px): single column - board, leaderboard, collage */
+
+.gm-page { max-width:1100px; margin:0 auto; padding:12px 16px 32px; box-sizing:border-box; }
+.gm-header { text-align:center; margin-bottom:18px; }
+#headline { margin:0; }
+
+.gm-panel { background:#fff; border:1px solid rgba(0,0,0,.10); border-radius:14px; box-shadow:0 6px 18px rgba(0,0,0,.08); padding:14px; box-sizing:border-box; }
+.gm-panel-title { font-size:15px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#8b0000; margin:0 0 10px; text-align:center; }
+
+/* PC */
+.gm-layout { display:grid; grid-template-columns:240px minmax(0,auto) 140px; gap:24px; justify-content:center; align-items:start; }
+.gm-scores { position:sticky; top:16px; }
+.gm-scores #scores-list { width:100% !important; margin:0; }
+.gm-board { display:flex; justify-content:center; padding:16px; }
+.gm-collage { position:sticky; top:16px; padding:10px; }
+.gm-collage .collage { display:flex; flex-direction:column; align-items:center; gap:10px; }
+.gm-collage .collage-img { width:72px; height:72px; object-fit:contain; display:block; }
+
+/* TABLET */
+@media (max-width:999px){
+  .gm-layout { grid-template-columns:250px minmax(0,auto); grid-template-areas:"collage collage" "scores board"; gap:18px; }
+  .gm-scores { grid-area:scores; position:static; }
+  .gm-board { grid-area:board; }
+  .gm-collage { grid-area:collage; position:static; }
+  .gm-collage .collage { flex-direction:row; flex-wrap:wrap; justify-content:center; gap:12px; }
+  .gm-collage .collage-img { width:56px; height:56px; }
 }
+
+/* Keep leaderboard rows on one line inside narrow cards.
+   scores-list.js sets fixed inline widths (40/120/40px = 200px);
+   these shrink them so a row fits any panel without wrapping. */
+@media (max-width:999px){
+  #scores-list li { display:flex; align-items:center; white-space:nowrap; }
+  #scores-list li > span:nth-child(1){ width:34px !important; flex:0 0 34px; }
+  #scores-list li > span:nth-child(2){ flex:1 1 auto; width:auto !important; overflow:hidden; text-overflow:ellipsis; }
+  #scores-list li > span:nth-child(3){ width:40px !important; flex:0 0 40px; text-align:right; }
+}
+
+/* PHONE */
+@media (max-width:699px){
+  .gm-page { padding:8px 10px 24px; }
+  .gm-layout { display:flex; flex-direction:column; align-items:stretch; gap:14px; }
+  .gm-board { order:1; padding:10px; overflow-x:auto; }
+  .gm-scores { order:2; position:static; width:100%; }
+  .gm-scores #scores-list { max-width:380px; margin:0 auto; }
+  .gm-collage { order:3; position:static; }
+  .gm-collage .collage { flex-direction:row; flex-wrap:wrap; justify-content:center; gap:10px; }
+  .gm-collage .collage-img { width:48px; height:48px; }
+}
+
+@media (max-width:400px){
+  #headline { font-size:30px; }
+  .gm-collage .collage-img { width:42px; height:42px; }
+}
+
+/* LEGACY SAFETY NET - matches old Bootstrap markup only */
+.row.d-flex #headline { text-align:center; width:100%; }
+.row.gx-4 { display:flex !important; flex-wrap:wrap; justify-content:center; align-items:flex-start; gap:24px; margin:0 0 18px; }
+.row.gx-4 > .col-3, .row.gx-4 > .col-5 { flex:0 0 auto; width:auto; max-width:none; padding:0; }
+.row.gx-4 .collage { display:flex; flex-direction:row; flex-wrap:wrap; justify-content:center; gap:10px; max-width:320px; background:#fff; border:1px solid rgba(0,0,0,.10); border-radius:14px; box-shadow:0 6px 18px rgba(0,0,0,.08); padding:12px; }
+.row.gx-4 .collage-img { width:56px; height:56px; object-fit:contain; display:block; }
+.row.gx-4 #scores-list { width:260px !important; margin:0; background:#fff; border:1px solid rgba(0,0,0,.10); border-radius:14px; box-shadow:0 6px 18px rgba(0,0,0,.08); padding:14px !important; }
+.table.table-bordered { display:block; border:none; margin:0 auto; width:auto !important; }
+.table.table-bordered .grid { display:flex; justify-content:center; }
+.table.table-bordered hr { display:none; }

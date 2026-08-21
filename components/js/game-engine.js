@@ -90,6 +90,28 @@ export class GameEngine {
         }
     }
 
+
+
+        // Wrap every play() call so a blocked autoplay doesn't throw/log:
+     safePlay(audio) {
+      const p = audio.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {}); // ignore autoplay-blocked rejection
+      }
+    }
+
+    // Unlock all sounds on the first click/keypress/touch:
+    unlockAudioOnce(sounds) {
+      const unlock = () => {
+        sounds.forEach(a => {
+          a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(() => {});
+        });
+        document.removeEventListener("pointerdown", unlock);
+        document.removeEventListener("keydown", unlock);
+      };
+      document.addEventListener("pointerdown", unlock);
+      document.addEventListener("keydown", unlock);
+    }
     async initialize_game() {
         this.balls = [];
         this.leafs = [];

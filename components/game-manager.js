@@ -7,6 +7,8 @@ import { ImagesCollage } from './images-collage.js';
 
 const SCORE_KEY_PREFIX = 'score:';
 
+console.log('%c[game-manager] layout v2 loaded', 'color:#7c3aed;font-weight:bold');
+
 export const GameManager = {
     name: 'GameManager',
     components: {
@@ -17,7 +19,7 @@ export const GameManager = {
         ImagesCollage
     },
     template: `
-      <div>
+      <div class="gm-page">
         <UsernameBlocker @on-set-username="set_username"></UsernameBlocker>
         <GameoverBlocker
             v-if="is_game_over"
@@ -26,40 +28,35 @@ export const GameManager = {
             :max_position_count="all_scores.length"
         />
 
-
-        <div class="row d-flex justify-content-center align-items-center">
+        <header class="gm-header">
           <h1 id="headline">Ball Dropping Game</h1>
-        </div>
-        <div class="row gx-4 d-flex justify-content-center align-items-center">
-          <div class="col-3">
-            <ImagesCollage></ImagesCollage>
-          </div>
+        </header>
 
-          <div class="col-5">
+        <main class="gm-layout">
+          <aside class="gm-panel gm-scores">
+            <h2 class="gm-panel-title">Leaderboard</h2>
             <ScoresList
-                class="col"
                 ref="scoresList"
                 :score="score"
                 :all_scores="all_scores"
             />
-          </div>
-        </div>
+          </aside>
 
-        <div class="table table-bordered w-100">
-          <div class="row justify-content-center">
-            <div class="grid">
-              <GameBoard
-                  id="game-board"
-                  ref="gameBoardRef"
-                  :score="score"
-                  @on-increase-score="increase_score"
-                  @on-game-over="game_over"
-                  @on-set-username="set_username"
-              />
-              <hr>
-            </div>
-          </div>
-        </div>
+          <section class="gm-panel gm-board">
+            <GameBoard
+                id="game-board"
+                ref="gameBoardRef"
+                :score="score"
+                @on-increase-score="increase_score"
+                @on-game-over="game_over"
+                @on-set-username="set_username"
+            />
+          </section>
+
+          <aside class="gm-panel gm-collage">
+            <ImagesCollage></ImagesCollage>
+          </aside>
+        </main>
       </div>
     `,
     setup() {
