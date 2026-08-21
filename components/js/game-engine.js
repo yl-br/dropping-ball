@@ -32,10 +32,11 @@ export class GameEngine {
     handle_game_over(...args) { return GameLogic.handle_game_over(this, ...args); }
     increase_point(...args) { return GameLogic.increase_point(this, ...args); }
 
-    constructor(canvas, line_height = 200, on_increase_score_callback, on_game_over_callback) {
+    constructor(canvas, line_height = 200, on_increase_score_callback, on_game_over_callback, on_quiz_needed_callback) {
         this.line_height = line_height;
         this.on_increase_score_callback = on_increase_score_callback;
         this.on_game_over_callback = on_game_over_callback;
+        this.on_quiz_needed_callback = on_quiz_needed_callback || (() => {});
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.is_playing = true;
@@ -44,6 +45,7 @@ export class GameEngine {
         this.mouse_ball = null;
         this.points = 0;
         this.audioPlayers = {};
+        this.is_quiz_active = false;
     }
 
     on_mouse_ball_move(mouse_ball_x, mouse_ball_y) {
@@ -95,6 +97,7 @@ export class GameEngine {
         this.tiltAngle = 0;
         this.points = 0;
         this.last_drawing_timestamp = -1;
+        this.is_quiz_active = false;
 
         // Image Setup
         GameEngine.BallBombImage.src = "assets/images/bomb_ball.png";
@@ -142,8 +145,8 @@ export class GameEngine {
     stop_game() { this.is_playing = false; }
 
     gameLoop() {
-        if (!this.is_playing || this.is_butterfly_playing) {
-            if (this.is_butterfly_playing) requestAnimationFrame(this.gameLoop.bind(this));
+        if (!this.is_playing || this.is_butterfly_playing || this.is_quiz_active) {
+            if (this.is_butterfly_playing || this.is_quiz_active) requestAnimationFrame(this.gameLoop.bind(this));
             return;
         }
         if (this.is_game_over()) {
@@ -179,5 +182,37 @@ export class GameEngine {
         const is_below = this.mouse_ball.y >= this.line_height;
         this.canvas.style.cursor = is_below ? 'none' : 'pointer';
         if (is_below && typeof drawX === 'function') drawX(this.ctx, this.mouse_ball.x, this.mouse_ball.y);
+    }
+
+    // NEW METHOD: Pause game and show quiz
+    show_math_quiz() {
+        this.is_quiz_active = true;
+        this.on_quiz_needed_callback();
+    }
+
+    // NEW METHOD: Handle correct quiz answer
+    on_quiz_correct() {
+        this.is_quiz_active = false;
+        this.trigger_golden_butterfly_effect().then(() => this.initialize_board_balls());
+    }
+
+    // NEW METHOD: Handle incorrect quiz answer - trigger game over
+    on_quiz_incorrect() {
+        this.is_quiz_active = false;
+        this.is_playing = false;
+        this.mouse_ball = null;
+        
+        // Show explosion animations
+        this.balls.forEach(ball => {
+            ball.show_balls_explode_animation(this.ctx, true);
+        });
+
+        // Notify the Vue component that the game is over
+        this.on_game_over_callback();
+
+        // Clear the board after a short delay for the explosion effects
+        window.setTimeout(() => {
+            this.draw(null);
+        }, 3000);
     }
 }

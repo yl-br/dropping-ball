@@ -27,7 +27,7 @@ export const GameBoard = {
       points: 0,
     };
   },
-  emits: ['on-increase-score', 'on-game-over', 'on-set-username'],
+  emits: ['on-increase-score', 'on-game-over', 'on-set-username', 'on-quiz-needed'],
   mounted() {
     this.initializeCanvas();
   },
@@ -38,7 +38,14 @@ export const GameBoard = {
 
           const deadlineY = this.canvas.height * 0.25;
 
-          this.gameEngine = new GameEngine(this.canvas, deadlineY, this.onIncreaseScore, this.onGameOver);
+          // *** CHANGED: Added on_quiz_needed_callback ***
+          this.gameEngine = new GameEngine(
+              this.canvas, 
+              deadlineY, 
+              this.onIncreaseScore, 
+              this.onGameOver,
+              this.onQuizNeeded
+          );
 
           this.gameEngine.initialize_game().then(() => {
               this.gameEngine.mouse_ball = this.gameEngine.create_random_ball(this.canvas.width / 2, 10);
@@ -86,6 +93,10 @@ export const GameBoard = {
       },
       onGameOver() {
           this.$emit('on-game-over');
+      },
+      // *** NEW METHOD: Handle quiz needed ***
+      onQuizNeeded() {
+          this.$emit('on-quiz-needed');
       },
     setUsername(input_username) {
       if (input_username !== '') {

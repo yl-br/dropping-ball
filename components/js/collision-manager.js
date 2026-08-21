@@ -158,7 +158,9 @@ export function handle_collision_with_bird(engine, ball_A, ball_B) {
   bird_animation(engine.ctx, engine.balls);
   engine.balls.forEach(ball=>ball.show_balls_explode_animation(engine.ctx))
   engine.balls = [];
-  engine.trigger_golden_butterfly_effect().then(() => engine.initialize_board_balls());
+  
+  // *** CHANGED: Show quiz instead of immediately reinitializing ***
+  engine.show_math_quiz();
 
   if(Math.random() < 0.20)
   {
@@ -177,6 +179,11 @@ export function handle_collision_with_parrots(engine, ball_A, ball_B) {
   engine.balls.splice(engine.balls.findIndex(item => item === ball_A), 1);
   engine.balls.splice(engine.balls.findIndex(item => item === ball_B), 1);
 
+  // *** CHANGED: Show quiz if board is now empty ***
+  if (engine.balls.length === 0) {
+    engine.show_math_quiz();
+  }
+
   if(Math.random() < 0.20)
   {
     displayString()
@@ -191,7 +198,9 @@ export function handle_collision_with_atomic_bomb(engine, ball_A, ball_B) {
   atomic_bomb_animation(engine.ctx);
   engine.balls.forEach(ball=>ball.show_balls_explode_animation(engine.ctx))
   engine.balls = [];
-  engine.trigger_golden_butterfly_effect().then(() => engine.initialize_board_balls());
+  
+  // *** CHANGED: Show quiz instead of immediately reinitializing ***
+  engine.show_math_quiz();
 
   if(Math.random() < 0.20)
   {
@@ -227,8 +236,9 @@ export function handle_collidion_with_same_color(engine, ball_A, ball_B) {
     ball_A.show_balls_explode_animation(engine.ctx);
     engine.balls.splice(engine.balls.findIndex(item => item === ball_A), 1);
 
+    // *** CHANGED: Show quiz if board is now empty ***
     if (engine.balls.length === 0) {
-      engine.trigger_golden_butterfly_effect().then(() => engine.initialize_board_balls());
+      engine.show_math_quiz();
     }
 
     if(Math.random() < 0.20)
@@ -277,8 +287,9 @@ export function handle_collision_with_dynamite(engine, ball_A, ball_B, position_
 
   engine.balls = engine.balls.filter(item => !effected_balls.includes(item));
 
+  // *** CHANGED: Show quiz if board is now empty ***
   if (engine.balls.length === 0) {
-    engine.trigger_golden_butterfly_effect().then(() => engine.initialize_board_balls());
+    engine.show_math_quiz();
   }
 
   if(Math.random() < 0.20)
@@ -297,8 +308,9 @@ export function handle_collsion_with_bomb(engine, ball_A, ball_B) {
   engine.balls.splice(engine.balls.findIndex(item => item === ball_A), 1);
   engine.balls.splice(engine.balls.findIndex(item => item === ball_B), 1);
 
+  // *** CHANGED: Show quiz if board is now empty ***
   if (engine.balls.length === 0) {
-    engine.trigger_golden_butterfly_effect().then(() => engine.initialize_board_balls());
+    engine.show_math_quiz();
   }
 
   if(Math.random() < 0.20)

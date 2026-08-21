@@ -1,0 +1,95 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the derivative of x³?",
+      "options": ["3x²", "x²", "3x", "x³/3"],
+      "correct": 0,
+      "difficulty": "easy"
+    },
+    {
+      "id": 2,
+      "question": "What is the derivative of sin(x)?",
+      "options": ["cos(x)", "-cos(x)", "sin(x)", "tan(x)"],
+      "correct": 0,
+      "difficulty": "easy"
+    },
+    {
+      "id": 3,
+      "question": "What is the integral of 2x?",
+      "options": ["x² + C", "2x + C", "x + C", "2 + C"],
+      "correct": 0,
+      "difficulty": "easy"
+    },
+    {
+      "id": 4,
+      "question": "What is the derivative of e^x?",
+      "options": ["e^x", "xe^(x-1)", "1", "e"],
+      "correct": 0,
+      "difficulty": "easy"
+    },
+    {
+      "id": 5,
+      "question": "What is the derivative of ln(x)?",
+      "options": ["1/x", "x", "1", "ln(x)/x"],
+      "correct": 0,
+      "difficulty": "medium"
+    },
+    {
+      "id": 6,
+      "question": "Find the derivative of f(x) = 5x² - 3x + 2",
+      "options": ["10x - 3", "5x - 3", "10x + 3", "10x² - 3x"],
+      "correct": 0,
+      "difficulty": "medium"
+    },
+    {
+      "id": 7,
+      "question": "What is the integral of cos(x)?",
+      "options": ["sin(x) + C", "-sin(x) + C", "cos(x) + C", "tan(x) + C"],
+      "correct": 0,
+      "difficulty": "medium"
+    },
+    {
+      "id": 8,
+      "question": "What is the limit of (x² - 1)/(x - 1) as x approaches 1?",
+      "options": ["2", "0", "1", "undefined"],
+      "correct": 0,
+      "difficulty": "medium"
+    },
+    {
+      "id": 9,
+      "question": "Find the derivative of f(x) = x²e^x using the product rule",
+      "options": ["e^x(x² + 2x)", "2xe^x", "x²e^x + e^x", "e^x(2x)"],
+      "correct": 0,
+      "difficulty": "hard"
+    },
+    {
+      "id": 10,
+      "question": "What is the second derivative of f(x) = x⁴?",
+      "options": ["12x²", "4x³", "4x", "x²"],
+      "correct": 0,
+      "difficulty": "hard"
+    },
+    {
+      "id": 11,
+      "question": "Find the integral of 1/x from 1 to e",
+      "options": ["1", "e", "0", "ln(e)"],
+      "correct": 0,
+      "difficulty": "hard"
+    },
+    {
+      "id": 12,
+      "question": "What is the derivative of tan(x)?",
+      "options": ["sec²(x)", "cot(x)", "1/cos²(x)", "sin(x)/cos(x)"],
+      "correct": 0,
+      "difficulty": "hard"
+    },
+    {
+      "id": 13,
+      "question": "Using the chain rule, find the derivative of f(x) = (3x + 1)⁵",
+      "options": ["15(3x + 1)⁴", "5(3x + 1)⁴", "3(3x + 1)⁴", "15(3x)⁴"],
+      "correct": 0,
+      "difficulty": "hard"
+    }
+  ]
+}
